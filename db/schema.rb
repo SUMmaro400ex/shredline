@@ -11,10 +11,50 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160507155949) do
+ActiveRecord::Schema.define(version: 20160514213715) do
 
   create_table "exercises", force: :cascade do |t|
     t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "workout_id"
+  end
+
+  add_index "exercises", ["workout_id"], name: "index_exercises_on_workout_id"
+
+  create_table "reps", force: :cascade do |t|
+    t.integer  "set_group_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "reps", ["set_group_id"], name: "index_reps_on_set_group_id"
+
+  create_table "rounds", force: :cascade do |t|
+    t.integer  "exercise_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "rounds", ["exercise_id"], name: "index_rounds_on_exercise_id"
+
+  create_table "set_groups", force: :cascade do |t|
+    t.integer  "round_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "set_groups", ["round_id"], name: "index_set_groups_on_round_id"
+
+  create_table "users", force: :cascade do |t|
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "name"
+    t.string   "email"
+    t.string   "password_digest"
+  end
+
+  create_table "workouts", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
